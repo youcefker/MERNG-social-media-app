@@ -5,7 +5,9 @@ type Post {
     id: ID!,
     body: String!,
     createdAt: String!,
-    username: String!
+    username: String!,
+    comments: [Comment]!,
+    likes: [Like]!
 }
 type User {
   id: ID!,
@@ -14,6 +16,17 @@ type User {
   token: String!,
   createdAt: String!
 },
+type Comment {
+  id: ID!,
+  createdAt: String!,
+  username: String!,
+  body: String!
+},
+type Like {
+  id: ID!,
+  createdAt: String!,
+  username: String!
+}
 input RegisterInput {
   username: String!,
   password: String!,
@@ -26,9 +39,12 @@ type Query {
 }
 type Mutation {
   register(registerInput: RegisterInput) : User!,
-  login(username: String!, password: String!): User!
-  createPost(body: String!): Post!
-  deletePost(postId: ID!): String!
+  login(username: String!, password: String!): User!,
+  createPost(body: String!): Post!,
+  deletePost(postId: ID!): String!,
+  createComment(postId: ID!, body: String!): Post!,
+  deleteComment(postId: ID!, commentId: ID!): Post!
+  likePost(postId: ID!): Post!
 }
 `
 module.exports = typeDefs
