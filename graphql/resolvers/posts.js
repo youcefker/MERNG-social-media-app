@@ -29,6 +29,9 @@ module.exports = {
     },
     Mutation: {
         createPost: async (_, { body }, context) => {
+            if(body.trim() === '') {
+                throw new UserInputError('Body of the post must bot be empty')
+            }
             const user = checkAuth(context)
             const newPost = new Post({
                 body, 
